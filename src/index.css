@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 96%;
+    --foreground: 220 53% 23%;
+    --card: 0 0% 100%;
+    --primary: 220 53% 23%;
+    --primary-foreground: 0 0% 100%;
+    --accent: 42 50% 54%;
+    --gold: 42 50% 54%;
+    --border: 40 20% 88%;
+    --muted-foreground: 220 20% 46%;
+    --ring: 42 50% 54%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .field-input {
+    @apply w-full px-4 py-3 bg-card border border-border rounded-[10px] focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all;
+  }
+  
+  .field-textarea {
+    @apply field-input resize-none min-h-[100px];
+  }
+  
+  .field-label {
+    @apply block text-sm font-semibold mb-2 text-foreground;
+  }
+
+  .check-option {
+    @apply flex items-center gap-3 px-4 py-3 border border-border rounded-[10px] hover:border-ring transition-colors cursor-pointer bg-card text-left text-sm sm:text-base;
+  }
+
+  .check-option.selected {
+    @apply border-ring bg-accent/5 border-2;
+  }
+
+  .radio-option {
+    @apply flex items-center gap-3 px-4 py-3 border border-border rounded-[10px] hover:border-ring transition-colors cursor-pointer bg-card text-left text-sm sm:text-base;
+  }
+
+  .radio-option.selected {
+    @apply border-ring bg-accent/5 border-2;
+  }
+
+  .equipment-card {
+    @apply bg-card border border-border p-5 sm:p-6 rounded-[14px] flex flex-col gap-4 relative shadow-sm;
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 bg-primary text-white rounded-[10px] hover:bg-primary/90 transition-colors font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply px-8 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-[10px] transition-colors font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-gold {
+    @apply px-8 py-3 bg-gold text-white rounded-[10px] hover:bg-gold/90 transition-colors font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+}
