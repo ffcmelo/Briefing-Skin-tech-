@@ -3,31 +3,18 @@ import type { BriefingData, Equipment } from '../types';
 import RadioSelect from '../RadioSelect';
 import { generateId } from '../utils';
 import { Plus, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface StepProps {
   data: BriefingData;
   updateData: (fields: Partial<BriefingData>) => void;
 }
 
-const FREQUENCIA_OPTIONS = [
-  "A cada 3 meses",
-  "A cada 6 meses",
-  "Anualmente"
-];
-
-const CATEGORIA_OPTIONS = [
-  "Laser",
-  "Radiofrequência",
-  "Ultrassom",
-  "Criolipólise",
-  "LED/Fototerapia",
-  "Microagulhamento",
-  "HIFU",
-  "Eletroestimulação",
-  "Outros"
-];
-
 const Step2Equipment: React.FC<StepProps> = ({ data, updateData }) => {
+  const { t } = useTranslation();
+
+  const FREQUENCIA_OPTIONS = t('steps.2.options.frequency', { returnObjects: true }) as string[];
+  const CATEGORIA_OPTIONS = t('steps.2.options.categories', { returnObjects: true }) as string[];
 
   const addEquipment = () => {
     const newEq: Equipment = {
@@ -57,17 +44,17 @@ const Step2Equipment: React.FC<StepProps> = ({ data, updateData }) => {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-serif text-foreground mb-4">Equipamentos</h2>
-        <p className="text-muted-foreground mb-6">Descreva os equipamentos que sua marca oferece.</p>
+        <h2 className="text-2xl font-serif text-foreground mb-4">{t('steps.2.title')}</h2>
+        <p className="text-muted-foreground mb-6">{t('steps.2.subtitle')}</p>
       </div>
 
       <div className="space-y-6">
-        <label className="field-label">Lista de Equipamentos</label>
+        <label className="field-label">{t('steps.2.fields.list_title')}</label>
         
         {data.equipamentos.map((eq, index) => (
           <div key={eq.id} className="equipment-card">
             <div className="flex justify-between items-center mb-2">
-              <h3 className="font-semibold text-primary">Equipamento #{index + 1}</h3>
+              <h3 className="font-semibold text-primary">{t('steps.2.fields.equipment_label')} #{index + 1}</h3>
               <button 
                 onClick={() => removeEquipment(eq.id)}
                 className="text-muted-foreground hover:text-red-500 transition-colors p-1"
@@ -79,17 +66,17 @@ const Step2Equipment: React.FC<StepProps> = ({ data, updateData }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm text-muted-foreground mb-1 block">Nome/Modelo</label>
+                <label className="text-sm text-muted-foreground mb-1 block">{t('steps.2.fields.name')}</label>
                 <input 
                   type="text" 
                   className="field-input py-2 text-sm" 
                   value={eq.nome}
                   onChange={(e) => updateEquipment(eq.id, 'nome', e.target.value)}
-                  placeholder="Ex: UltraLift HD"
+                  placeholder={t('steps.2.fields.name_placeholder')}
                 />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-1 block">Categoria</label>
+                <label className="text-sm text-muted-foreground mb-1 block">{t('steps.2.fields.category')}</label>
                 <select 
                   className="field-input py-2 text-sm"
                   value={eq.categoria}
@@ -105,38 +92,38 @@ const Step2Equipment: React.FC<StepProps> = ({ data, updateData }) => {
                     className="field-input py-2 text-sm mt-2" 
                     value={eq.categoriaOutros}
                     onChange={(e) => updateEquipment(eq.id, 'categoriaOutros', e.target.value)}
-                    placeholder="Especifique a categoria..."
+                    placeholder={t('steps.2.fields.category_other')}
                   />
                 )}
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-1 block">Preço à vista (R$)</label>
+                <label className="text-sm text-muted-foreground mb-1 block">{t('steps.2.fields.price')}</label>
                 <input 
                   type="number" 
                   className="field-input py-2 text-sm" 
                   value={eq.preco}
                   onChange={(e) => updateEquipment(eq.id, 'preco', e.target.value)}
-                  placeholder="Ex: 150000"
+                  placeholder={t('steps.2.fields.price_placeholder')}
                 />
               </div>
               <div>
-                <label className="text-sm text-muted-foreground mb-1 block">Tratamentos realizados</label>
+                <label className="text-sm text-muted-foreground mb-1 block">{t('steps.2.fields.treatments')}</label>
                 <input 
                   type="text" 
                   className="field-input py-2 text-sm" 
                   value={eq.tratamentos}
                   onChange={(e) => updateEquipment(eq.id, 'tratamentos', e.target.value)}
-                  placeholder="Ex: Flacidez, Celulite"
+                  placeholder={t('steps.2.fields.treatments_placeholder')}
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="text-sm text-muted-foreground mb-1 block">Diferencial técnico</label>
+                <label className="text-sm text-muted-foreground mb-1 block">{t('steps.2.fields.diferencial')}</label>
                 <input 
                   type="text" 
                   className="field-input py-2 text-sm" 
                   value={eq.diferencial}
                   onChange={(e) => updateEquipment(eq.id, 'diferencial', e.target.value)}
-                  placeholder="Ex: Refrigeração a -10ºC"
+                  placeholder={t('steps.2.fields.diferencial_placeholder')}
                 />
               </div>
             </div>
@@ -148,13 +135,13 @@ const Step2Equipment: React.FC<StepProps> = ({ data, updateData }) => {
           className="w-full py-4 border-2 border-dashed border-border rounded-[14px] text-muted-foreground hover:border-gold hover:text-gold transition-colors flex items-center justify-center gap-2 font-medium bg-card"
         >
           <Plus size={20} />
-          Adicionar equipamento
+          {t('steps.2.fields.add_equipment')}
         </button>
       </div>
 
       <div className="space-y-4 pt-6 border-t border-border">
         <div>
-          <label className="field-label">Frequência de lançamentos</label>
+          <label className="field-label">{t('steps.2.fields.frequency')}</label>
           <RadioSelect 
             options={FREQUENCIA_OPTIONS} 
             selectedOption={data.frequenciaLancamentos} 
@@ -163,11 +150,11 @@ const Step2Equipment: React.FC<StepProps> = ({ data, updateData }) => {
         </div>
 
         <div>
-          <label className="field-label" htmlFor="certificacoes">Certificações e selos</label>
+          <label className="field-label" htmlFor="certificacoes">{t('steps.2.fields.certifications')}</label>
           <textarea
             id="certificacoes"
             className="field-textarea"
-            placeholder="Ex: ANVISA, CE, FDA..."
+            placeholder={t('steps.2.fields.certifications_placeholder')}
             value={data.certificacoes}
             onChange={(e) => updateData({ certificacoes: e.target.value })}
           />

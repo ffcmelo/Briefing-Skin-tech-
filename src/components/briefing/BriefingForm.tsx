@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { BriefingData } from './types';
 import { initialBriefingData } from './types';
 import { loadFromStorage, saveToStorage } from './utils';
+import { useTranslation } from 'react-i18next';
 import ProgressBar from './ProgressBar';
+import LanguageSelector from '../LanguageSelector';
 
 import Step1Identity from './steps/Step1Identity';
 import Step2Equipment from './steps/Step2Equipment';
@@ -16,6 +18,7 @@ const STORAGE_KEY = "skintech-briefing";
 const TOTAL_STEPS = 6;
 
 const BriefingForm: React.FC = () => {
+  const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(1);
   const [data, setData] = useState<BriefingData>(initialBriefingData);
   const [direction, setDirection] = useState(1);
@@ -77,10 +80,12 @@ const BriefingForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto py-8 px-4">
+      <LanguageSelector />
+      
       {/* Header */}
       <div className="text-center mb-10 pb-6 border-b border-border">
-        <h1 className="text-3xl md:text-4xl font-serif text-gold mb-2">Skin Tech Switzerland</h1>
-        <p className="text-muted-foreground font-medium uppercase tracking-wider text-sm md:text-base">Briefing Estratégico</p>
+        <h1 className="text-3xl md:text-4xl font-serif text-gold mb-2">{t('app.title')}</h1>
+        <p className="text-muted-foreground font-medium uppercase tracking-wider text-sm md:text-base">{t('app.subtitle')}</p>
       </div>
 
       <ProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
@@ -112,7 +117,7 @@ const BriefingForm: React.FC = () => {
           disabled={currentStep === 1}
           className="btn-outline"
         >
-          Anterior
+          {t('nav.prev')}
         </button>
 
         {currentStep < TOTAL_STEPS && (
@@ -120,7 +125,7 @@ const BriefingForm: React.FC = () => {
             onClick={nextStep}
             className="btn-primary"
           >
-            Próximo
+            {t('nav.next')}
           </button>
         )}
       </div>
